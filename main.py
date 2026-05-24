@@ -1,6 +1,6 @@
 import argparse
 from config import CONFIG, DEVICE, LABEL_MAP
-from data_prep import download_data, get_dataloaders
+from data_preparation import download_data, get_dataloaders
 from model import build_model
 from train import train_model
 from evaluate import final_evaluate
