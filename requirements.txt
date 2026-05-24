@@ -1,0 +1,8 @@
+torch
+torchvision
+transformers
+peft
+scikit-learn
+tqdm
+Pillow
+kagglehub
