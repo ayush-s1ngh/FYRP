@@ -43,14 +43,18 @@ def get_dataloaders(config):
     train_dataset = datasets.ImageFolder(root=train_dir, transform=train_transform)
     test_dataset = datasets.ImageFolder(root=test_dir, transform=test_transform)
 
+    is_multi_worker = config["num_workers"] > 0
+    prefetch = 2 if is_multi_worker else None
+    persistent = True if is_multi_worker else False
+
     train_loader = DataLoader(
         train_dataset,
         batch_size=config["batch_size"],
         shuffle=True,
         num_workers=config["num_workers"],
         pin_memory=True,
-        prefetch_factor=2,
-        persistent_workers=True
+        prefetch_factor=prefetch,
+        persistent_workers=persistent
     )
 
     test_loader = DataLoader(
@@ -59,8 +63,8 @@ def get_dataloaders(config):
         shuffle=False,
         num_workers=config["num_workers"],
         pin_memory=True,
-        prefetch_factor=2,
-        persistent_workers=True
+        prefetch_factor=prefetch,
+        persistent_workers=persistent
     )
 
     return train_loader, test_loader, train_dataset.class_to_idx
